@@ -6,7 +6,7 @@ const dialog = () => {
 
     return (
         <>
-            <h1>ahbajhbajhbisger23784</h1>
+            <h1>heheheh</h1>
         </>
     );
 };

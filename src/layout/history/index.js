@@ -59,7 +59,7 @@ const Index = () => {
                 </Button>
             </div>
             <div className="history-match"> Match {questions[questionCount].key}</div>
-            <Input className="history-input" placeholder="Basic usage" value={text} onChange={handleChange} />
+            <Input className="history-input" placeholder="Search ..." value={text} onChange={handleChange} />
             {/* <Table columns={columns} dataSource={allResult} pagination={false} /> */}
             <table>
                 <tr>

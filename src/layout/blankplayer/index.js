@@ -28,7 +28,7 @@ const Index = () => {
             <Button onClick={() => dialog.current.openDialog()}>Add Player</Button>
             <Dialog ref={dialog}>
                 <div>New Name:</div>
-                <Input placeholder="Basic usage" value={text} onChange={handleChange} />
+                <Input placeholder="Name..." value={text} onChange={handleChange} />
 
                 <Button onClick={handleSubmit}>OK</Button>
                 <Button onClick={() => dialog.current.handleCancel()}>Cancel</Button>

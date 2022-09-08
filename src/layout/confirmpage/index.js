@@ -51,7 +51,7 @@ const Index = () => {
                 </Link>
                 <Dialog ref={dialog}>
                     <div>New Name:</div>
-                    <Input placeholder="Basic usage" value={text} onChange={handleChange} />
+                    <Input placeholder="Name..." value={text} onChange={handleChange} />
 
                     <Button onClick={handleSubmit}>OK</Button>
                     <Button onClick={handleCancel}>Cancel</Button>

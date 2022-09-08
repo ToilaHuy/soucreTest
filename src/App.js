@@ -1,36 +1,20 @@
 import './App.css';
-import React, { useRef, useState } from 'react';
-import { Button } from 'antd';
-import { Dialog, Table } from './components/index';
-
+import React from 'react';
+import { Landingpage, Blankplayer, Confirmpage, Gamescreen, History, Resultpage } from './layout/index';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
-    const dialog = useRef();
-    const [text, setText] = useState('');
-
-    const handleChange = (e) => {
-        setText(e.target.value);
-        console.log(text);
-    };
-    const handleSubmit = (e) => {
-        console.log('haha');
-        dialog.current.handleOk();
-    };
-
     return (
         <>
-            <h1>hajhajhajhbajhajh</h1>
-            <div>ajhvbasjh</div>
-            <Button onClick={() => dialog.current.openDialog()} className="btn btn-create color-white">
-                Tạo Thêm Thành Viên
-            </Button>
-            <Dialog ref={dialog}>
-                <input value={text} onChange={handleChange} />
-
-                <Button onClick={handleSubmit} className="btn btn-create color-white">
-                    Tạo Thêm Thành Viên
-                </Button>
-            </Dialog>
-            <Table></Table>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Landingpage />} />
+                    <Route path="/blankplayer" element={<Blankplayer />} />
+                    <Route path="/confirmpage" element={<Confirmpage />} />
+                    <Route path="/gamescreen" element={<Gamescreen />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/resultpage" element={<Resultpage />} />
+                </Routes>
+            </Router>
         </>
     );
 }

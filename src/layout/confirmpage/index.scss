@@ -1,0 +1,15 @@
+.confirmpage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .ant-table-wrapper {
+        min-width: 500px;
+        max-width: 500px;
+        margin-bottom: 20px;
+    }
+    .ant-btn {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}

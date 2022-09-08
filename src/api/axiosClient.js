@@ -1,7 +1,7 @@
 import axios from 'axios';
 import queryString from 'query-string';
 const AxiosClient = axios.create({
-    baseURL: process.env.URL,
+    baseURL: 'https://yesno.wtf/api',
     headers: {
         'content-type': 'application/json',
     },

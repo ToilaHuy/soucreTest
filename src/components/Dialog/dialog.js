@@ -10,12 +10,12 @@ const dialog = () => {
         console.log('ahahahah');
     };
     return (
-        <>
+        <div className="wrapper">
             <Button type="primary" onClick={handleSubmit}>
                 Button
             </Button>
             <h1>heheheh</h1>
-        </>
+        </div>
     );
 };
 

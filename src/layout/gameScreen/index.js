@@ -55,7 +55,6 @@ const Index = () => {
         setPlayerCount(0);
         setQuestionCount(questionCount + 1);
     }
-    console.log(answer);
     useEffect(() => {
         axios.getImage().then((response) => {
             setImage(response.image);

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 const Index = () => {
     const data = useSelector(selectAllPlayers);
     const dispatch = useDispatch();
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const columns = [
         {
@@ -31,10 +32,12 @@ const Index = () => {
     const handleSubmit = () => {
         dispatch(addPlayer(text));
         setText('');
+
         dialog.current.handleOk();
     };
     const handleChange = (e) => {
         setText(e.target.value);
+        e.target.value.trim().length !== 0 ? setIsDisabled(false) : setIsDisabled(true);
     };
     const handleCancel = () => {
         dialog.current.handleCancel();
@@ -53,7 +56,9 @@ const Index = () => {
                     <div>New Name:</div>
                     <Input placeholder="Name..." value={text} onChange={handleChange} />
 
-                    <Button onClick={handleSubmit}>OK</Button>
+                    <Button disabled={isDisabled} onClick={handleSubmit}>
+                        OK
+                    </Button>
                     <Button onClick={handleCancel}>Cancel</Button>
                 </Dialog>
             </div>

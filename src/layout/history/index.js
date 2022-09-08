@@ -12,7 +12,6 @@ const Index = () => {
     const questions = useSelector(selectAllQuestions);
     const players = useSelector(selectAllPlayers);
     const [text, setText] = useState('');
-    console.log(text);
     const handleChange = (e) => {
         setText(e.target.value);
     };

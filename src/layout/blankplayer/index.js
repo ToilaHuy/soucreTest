@@ -9,6 +9,7 @@ import './index.scss';
 const Index = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const [text, setText] = useState('');
     const dialog = useRef();
@@ -21,6 +22,7 @@ const Index = () => {
     };
     const handleChange = (e) => {
         setText(e.target.value);
+        e.target.value.trim().length !== 0 ? setIsDisabled(false) : setIsDisabled(true);
     };
     return (
         <div className="blankplayer">
@@ -30,7 +32,9 @@ const Index = () => {
                 <div>New Name:</div>
                 <Input placeholder="Name..." value={text} onChange={handleChange} />
 
-                <Button onClick={handleSubmit}>OK</Button>
+                <Button disabled={isDisabled} onClick={handleSubmit}>
+                    OK
+                </Button>
                 <Button onClick={() => dialog.current.handleCancel()}>Cancel</Button>
             </Dialog>
         </div>

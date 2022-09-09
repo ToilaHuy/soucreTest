@@ -73,6 +73,7 @@ const Index = () => {
             if (questionCount + 1 === questions.length) {
                 setIsEnd(true);
                 setQuestionCount(0);
+                setResult('');
             }
         }, 1000);
     };
@@ -126,6 +127,7 @@ const Index = () => {
                         Next player
                     </Button>
                 )}
+                {isEnd && <div>END GAME</div>}
                 {isEnd && (
                     <Button
                         onClick={() => {

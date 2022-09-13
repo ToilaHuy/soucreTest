@@ -12,7 +12,7 @@ const playerSlice = createSlice({
             prepare(name) {
                 return {
                     payload: {
-                        id: initialState.length > 0 ? initialState[initialState.length - 1].id + 1 : 1,
+                        id: nanoid(),
                         name,
                     },
                 };

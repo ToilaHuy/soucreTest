@@ -5,23 +5,23 @@ import 'antd/dist/antd.css';
 import axios from '../../api/axios';
 
 import './index.scss';
-import { selectAllQuestions } from '../../features/Game/gameSlice';
 import { selectAllPlayers } from '../../features/player/playerSlice';
-import resultSlice, { addResult } from '../../features/result/resultSlice';
+import { addResult } from '../../features/result/resultSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectAllResult } from '../../features/result/resultSlice';
 
 const Index = () => {
     const navigate = useNavigate();
-    const questions = useSelector(selectAllQuestions);
     const allResult = useSelector(selectAllResult);
     const players = useSelector(selectAllPlayers);
-    const [questionCount, setQuestionCount] = useState(allResult[allResult.length - 1]?.key || 0);
+    const [questionCount, setQuestionCount] = useState(allResult[allResult.length - 1]?.matchId || 1);
     const [check, setCheck] = useState('');
     const [result, setResult] = useState('');
     const [answer, setAnswer] = useState('');
+    const [answerApi, setAnswerApi] = useState('');
+
     const [loadings, setLoadings] = useState([]);
-    const [playerCount, setPlayerCount] = useState(0);
+    const [playerCount, setPlayerCount] = useState(allResult[allResult.length - 1]?.playerCount || 0);
     const [showBtn, setShowBtn] = useState(true);
     const [image, setImage] = useState();
     const [isEnd, setIsEnd] = useState(false);
@@ -51,26 +51,34 @@ const Index = () => {
         setAnswer('no');
         setIsDisabled(false);
     };
-    if (playerCount === players.length && questionCount !== questions.length) {
-        setPlayerCount(0);
-        setQuestionCount(questionCount + 1);
+    useEffect(() => {
+        if (playerCount === players.length) {
+            setQuestionCount(questionCount + 1);
+            dispatch(addResult(null, questionCount + 1, null, null));
+            setPlayerCount(0);
+        }
+    }, [showBtn]);
+    if (playerCount === players.length) {
     }
+
     useEffect(() => {
         axios.getImage().then((response) => {
             setImage(response.image);
+            setAnswerApi(response.answer);
         });
-    }, [answer]);
+    }, [showBtn]);
+
     useEffect(() => {
-        questions[questionCount].answer === answer ? setCheck('yes') : setCheck('no');
+        answerApi === answer ? setCheck('yes') : setCheck('no');
     }, [answer]);
 
     const handleSubmit = () => {
         enterLoading(0);
-        dispatch(addResult(players[playerCount]?.name, questions[questionCount].key, answer, check));
+        dispatch(addResult(players[playerCount]?.name, questionCount, answer, check, playerCount + 1));
         setTimeout(() => {
             setResult(check);
             setShowBtn(false);
-            if (questionCount + 1 === questions.length) {
+            if (questionCount === 5 && playerCount + 1 === players.length) {
                 setIsEnd(true);
                 setQuestionCount(0);
                 setResult('');
@@ -97,9 +105,9 @@ const Index = () => {
                     Player History
                 </Button>
             </div>
-            <div className="game-match"> Match {questions[questionCount]?.key}</div>
+            <div className="game-match"> Match {questionCount}</div>
             <div className="game-player">Player: {players[playerCount]?.name}</div>
-            <div className="game-question"> Question: {questions[questionCount].question}</div>
+
             <div className="game-choose">
                 <Button onClick={handleClickYes}>YES</Button>
                 {result === 'yes' && <div className="game-result">Correct</div>}
@@ -117,14 +125,14 @@ const Index = () => {
                         disabled={isDisabled}
                         loading={loadings[0]}
                         onClick={handleSubmit}
-                        style={{ backgroundColor: '#c742aa' }}
+                        style={{ backgroundColor: '#105db1a3', fontWeight: 'bold', color: 'black' }}
                     >
                         Submit
                     </Button>
                 )}
                 {!showBtn && !isEnd && (
                     <Button onClick={handleNextPlayer} style={{ backgroundColor: '#c742aa' }}>
-                        Next player
+                        {playerCount + 1 === players.length ? 'Next game' : 'Next player'}
                     </Button>
                 )}
                 {isEnd && <div>END GAME</div>}

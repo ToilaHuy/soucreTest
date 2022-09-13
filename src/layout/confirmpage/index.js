@@ -15,7 +15,7 @@ const Index = () => {
     const columns = [
         {
             title: 'NO',
-            dataIndex: 'id',
+            dataIndex: 'key',
             key: 'age',
         },
         {
@@ -25,6 +25,13 @@ const Index = () => {
             render: (text) => <a>{text}</a>,
         },
     ];
+    const newData = [...data];
+    for (const index in newData) {
+        newData[index] = {
+            ...newData[index],
+            key: index,
+        };
+    }
 
     const dialog = useRef();
     const [text, setText] = useState('');
@@ -46,7 +53,7 @@ const Index = () => {
     return (
         <div className="confirmpage">
             <Header></Header>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={newData} pagination={false} rowKey={(record) => record.id} />
             <div>
                 <Button onClick={() => dialog.current.openDialog()}>Add More Player</Button>
                 <Link to="/gamescreen">

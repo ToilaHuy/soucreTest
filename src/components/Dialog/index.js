@@ -31,7 +31,7 @@ const Index = forwardRef((props, ref) => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <p className="dialog">{props.children}</p>
+                <div className="dialog">{props.children}</div>
             </Modal>
         </>
     );

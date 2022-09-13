@@ -16,31 +16,49 @@ const Index = () => {
         setText(e.target.value);
     };
     const allResult = useSelector(selectAllResult);
-    const [questionCount, setQuestionCount] = useState(allResult[allResult.length - 1]?.key || 0);
+    const [questionCount, setQuestionCount] = useState(allResult[allResult.length - 1]?.matchId || 0);
     const coverDate = (item) => {
         const date = new Date();
 
         const dateAt = ` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
         return dateAt;
     };
-    const search = allResult.filter((item) => item.name.includes(text));
+
+    const matchResult = allResult.filter((match) => {
+        if (match.matchId === questionCount) {
+            return match;
+        }
+    });
+
+    const search = matchResult.filter((item) => item?.name?.includes(text));
 
     const itemTable = search.map((result, index) => {
         return (
-            <tr>
-                <td>{index + 1}</td>
-                <td>{result.name}</td>
-                <td>{coverDate(result.date)}</td>
-                <td>{result.answer}</td>
-                <td>{result.result}</td>
-                <td>{result.result === 'yes' ? '1' : '0'}</td>
+            <tr key={index}>
+                <td>{index}</td>
+                <td>{result?.name}</td>
+                <td>{coverDate(result?.date)}</td>
+                <td>{result?.answer}</td>
+                <td>{result?.result}</td>
+                <td>{result?.result === 'yes' ? '1' : '0'}</td>
             </tr>
         );
     });
+    const getTotal = (item) => {
+        let sum = 0;
+        allResult.map((total) => {
+            if (total?.name === item && total?.result === 'yes') {
+                return (sum = sum + 1);
+            }
+        });
+        return sum;
+    };
     const namePlayers = players.map((result, index) => {
         return (
             <tr key={index}>
-                <td>{result.name}</td>
+                <td>{result?.name}</td>
+                <td>{(getTotal(result?.name) / 5) * 100} %</td>
+                <td>{getTotal(result?.name)}</td>
             </tr>
         );
     });
@@ -54,10 +72,10 @@ const Index = () => {
                         navigate('../gamescreen', { replace: true });
                     }}
                 >
-                    Player History
+                    back
                 </Button>
             </div>
-            <div className="history-match"> Match {questions[questionCount].key}</div>
+            <div className="history-match"> Match {questionCount}</div>
             <Input className="history-input" placeholder="Search ..." value={text} onChange={handleChange} />
             {/* <Table columns={columns} dataSource={allResult} pagination={false} /> */}
             <table>

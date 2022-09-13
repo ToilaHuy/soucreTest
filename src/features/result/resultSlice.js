@@ -9,13 +9,14 @@ const resultSlice = createSlice({
             reducer(state, action) {
                 state.push(action.payload);
             },
-            prepare(name, key, answer, result) {
+            prepare(name, matchId, answer, result, playerCount) {
                 return {
                     payload: {
-                        key,
+                        matchId,
                         name,
                         answer,
                         result,
+                        playerCount,
                         date: new Date().toISOString(),
                     },
                 };

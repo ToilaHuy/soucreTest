@@ -23,7 +23,14 @@ const Index = () => {
         const dateAt = ` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
         return dateAt;
     };
-    const search = allResult.filter((item) => item.name.includes(text));
+
+    const matchResult = allResult.filter((match) => {
+        if (match.matchId === questionCount) {
+            return match;
+        }
+    });
+
+    const search = matchResult.filter((item) => item.name.includes(text));
 
     const itemTable = search.map((result, index) => {
         return (
@@ -37,10 +44,31 @@ const Index = () => {
             </tr>
         );
     });
+    const getTotal = (item) => {
+        let sum = 0;
+        allResult.map((total) => {
+            if (total?.name === item && total?.result === 'yes') {
+                return (sum = sum + 1);
+            }
+        });
+        return sum;
+    };
+
+    const winner = players.map((result) => {
+        return {
+            name: result.name,
+            point: getTotal(result.name),
+        };
+    });
+    const winnerGame = Math.max(...winner.map((result) => result.point));
+    const winGame = winner.filter((result) => result.point === winnerGame);
+    console.log(winGame);
     const namePlayers = players.map((result, index) => {
         return (
             <tr key={index}>
-                <td>{result.name}</td>
+                <td>{result?.name}</td>
+                <td>{(getTotal(result?.name) / 5) * 100} %</td>
+                <td>{getTotal(result?.name)}</td>
             </tr>
         );
     });
@@ -70,7 +98,7 @@ const Index = () => {
                 </tr>
                 {namePlayers}
             </table>
-            <div>The winner is:</div>
+            <div>The winner is: {winGame[0].name}</div>
             <div style={{ marginTop: '10px' }}>
                 <Button
                     onClick={() => {

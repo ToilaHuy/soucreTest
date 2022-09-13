@@ -1,5 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import 'antd/dist/antd.css';
+import './index.scss';
 
 import { Modal } from 'antd';
 
@@ -23,8 +24,14 @@ const Index = forwardRef((props, ref) => {
 
     return (
         <>
-            <Modal footer={null} title="Basic Modal" open={isOpenedDialog} onOk={handleOk} onCancel={handleCancel}>
-                <p>{props.children}</p>
+            <Modal
+                title="please enter a new name"
+                footer={null}
+                open={isOpenedDialog}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <div className="dialog">{props.children}</div>
             </Modal>
         </>
     );
